@@ -1,4 +1,6 @@
-# vuemedium
+# Another vue educational project
+
+> Educational project, original source article is here (https://medium.com/@devlob/building-an-app-in-vue-js-webpack-axios-bootstrap-4-reddit-and-infinite-scrolling-in-vanilla-f042d5322b7)
 
 > A Vue.js project
 
