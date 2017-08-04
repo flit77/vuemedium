@@ -36,7 +36,22 @@ export default {
   },
   methods: {
     getPosts(page) {
+      this.postsLoading = true
+      var url = 'https://www.reddit.com/r/all/top.json?limit=30&count=30'
 
+      if (page != null) {
+        url = 'https://www.reddit.com/r/all/top.json?limit=30&count=30&after=' + page
+      }
+
+      axios.get(url)
+        .then(response => {
+          this.posts = this.posts.concat(response.data.data.children)
+          this.nextPage = response.data.data.after
+          this.postsLoading = false
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
