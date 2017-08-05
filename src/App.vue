@@ -29,6 +29,7 @@ import axios from 'axios'
 export default {
   created() {
     this.getPosts()
+    window.addEventListener('scroll', this.handleScroll)
   },
   data() {
     return {
@@ -38,6 +39,13 @@ export default {
     }
   },
   methods: {
+    handleScroll() {
+      if (document.body.scrollHeight - window.innerHeight - document.body.scrollTop <= 5) {
+        if (this.nextPage != null) {
+          this.getPosts(this.nextPage)
+        }
+      }
+    },
     getPosts(page) {
       this.postsLoading = true
       var url = 'https://www.reddit.com/r/all/top.json?limit=30&count=30'
