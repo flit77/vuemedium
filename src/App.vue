@@ -41,8 +41,8 @@ export default {
   methods: {
     handleScroll() {
       if (document.body.scrollHeight - window.innerHeight - document.body.scrollTop <= 5) {
-        if (this.nextPage != null) {
-          this.getPosts(this.nextPage)
+        if (this.nextPage != null && this.postsLoading === false) {
+          this.debounce(this.getPosts(this.nextPage), 500)
         }
       }
     },
@@ -63,6 +63,21 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    debounce(func, wait, immediate) {
+      let timeout
+      return function () {
+        const context = this
+        const args = arguments
+        const later = function () {
+          timeout = null
+          if (!immediate) func.apply(context, args)
+        }
+        const callNow = immediate && !timeout
+        clearTimeout(timeout)
+        timeout = setTimeout(later, wait)
+        if (callNow) func.apply(context, args)
+      }
     }
   }
 }
